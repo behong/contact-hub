@@ -7,6 +7,16 @@ import { useSearchParams } from 'next/navigation';
 const MIN_MEMO_LEN = 10;
 const MAX_MEMO_LEN = 500;
 
+function isSafeHttpUrl(value: string) {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'http:' || url.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 function mapErrorMessage(code: string) {
   switch (code) {
     case 'VALIDATION_ERROR':
@@ -26,6 +36,7 @@ export default function NewPageClient() {
   const params = useSearchParams();
   const site = params.get('site') ?? '';
   const returnUrl = params.get('return_url') ?? '';
+  const canReturn = isSafeHttpUrl(returnUrl);
   const returnHost = (() => {
     if (!returnUrl) return '';
     try {
@@ -146,8 +157,13 @@ export default function NewPageClient() {
             <button className="button" type="submit" disabled={!canSubmit}>
               {loading ? '전송 중...' : '보내기'}
             </button>
-            <p className="note">메모는 담당자 메일로만 전달됩니다.</p>
+            {canReturn ? (
+              <a className="link-button" href={returnUrl}>
+                취소
+              </a>
+            ) : null}
           </div>
+          <p className="note">메모는 담당자 메일로만 전달됩니다.</p>
 
           {error ? <p className="error" role="alert">{error}</p> : null}
         </form>
