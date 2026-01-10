@@ -157,6 +157,18 @@ code {
   flex-wrap: wrap;
 }
 
+.cancel-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
 .button {
   appearance: none;
   border: none;

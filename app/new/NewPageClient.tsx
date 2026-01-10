@@ -158,9 +158,12 @@ export default function NewPageClient() {
               {loading ? '전송 중...' : '보내기'}
             </button>
             {canReturn ? (
-              <a className="link-button" href={returnUrl}>
-                취소
-              </a>
+              <div className="cancel-wrap">
+                <a className="link-button" href={returnUrl}>
+                  취소
+                </a>
+                <span className="hint">{'<-'} 누르면 이전 사이트로 돌아갑니다</span>
+              </div>
             ) : null}
           </div>
           <p className="note">메모는 담당자 메일로만 전달됩니다.</p>
